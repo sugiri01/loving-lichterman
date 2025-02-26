@@ -1,10 +1,28 @@
 import React, { useState } from "react";
 
-const KeywordRecommendations = () => {
-  const [activeTab, setActiveTab] = useState("all");
+// Define TypeScript interfaces for our data structures
+interface Keyword {
+  keyword: string;
+  searchVolume: number;
+  competition: "Low" | "Medium" | "High";
+  bidRange: string;
+}
+
+interface Category {
+  id: string;
+  name: string;
+  count: number;
+}
+
+interface KeywordCategories {
+  [key: string]: Keyword[];
+}
+
+const KeywordRecommendations: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<string>("all");
 
   // Top keywords organized by categories
-  const keywordCategories = {
+  const keywordCategories: KeywordCategories = {
     all: [
       {
         keyword: "python programming",
@@ -534,7 +552,7 @@ const KeywordRecommendations = () => {
   };
 
   // Category information for the tabs
-  const categories = [
+  const categories: Category[] = [
     { id: "all", name: "All Keywords", count: keywordCategories.all.length },
     { id: "ai", name: "AI", count: keywordCategories.ai.length },
     { id: "ml", name: "Machine Learning", count: keywordCategories.ml.length },
@@ -558,12 +576,12 @@ const KeywordRecommendations = () => {
   ];
 
   // Format large numbers
-  const formatNumber = (num) => {
+  const formatNumber = (num: number): string => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
   // Get competition color
-  const getCompetitionColor = (competition) => {
+  const getCompetitionColor = (competition: string): string => {
     switch (competition) {
       case "Low":
         return "bg-green-100 text-green-800";
